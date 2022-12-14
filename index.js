@@ -34,20 +34,21 @@ app.get("/api", (req, res) => {
 app.get("/api/:timestamp", (req, res) => {
   const timestamp = req.params.timestamp; 
 
-  if(!isNaN(Number(timestamp)) && timestamp.length === 13){
-    return res.json({
-      unix: Date(timestamp).valueOf(), 
-      utc: new Date(Number(timestamp)).toString()
+  if(!isNaN(Number(timestamp))){
+    const dateInt = parseInt(timestamp);
+    res.json({ 
+      unix: Number(timestamp), 
+      utc: new Date(dateInt).toUTCString()
     })
   }
-  //
+  // format date & time req 
 
   if(new Date(timestamp).toUTCString() !== "Invalid Date"){
     return res.json({
       unix: new Date(timestamp).valueOf(), 
-      utc: new Date(timestamp).toString()
+      utc: new Date(timestamp).toUTCString()
     })
-    // parses and formats new dates 
+    // parses & formats new dates 
   }
   res.json({error: "Invalid Date"})
   //return error message if date structure is invalid 
