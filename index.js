@@ -23,8 +23,13 @@ app.get("/", function (req, res) {
 app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
-
-
+//return current time in utc and unix keys
+app.get("/api", (req, res) => {
+  res.json({
+    utc: new Date().toUTCString(), 
+    unix: new Date().getTime()
+  })
+}); 
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
